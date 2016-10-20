@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>新增班级</title>
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/erweima-style.css" />
+</head>
+<body>
+<div class="chuda_co" id="container">
+    <div class="co-box">
+        <div class="title"><h4>角色管理>>分配权限</h4></div>
+        <div class="fill-info">
+            <form action="power.php?c=power&&a=allotPower" method="post">
+                <div class="info-box">
+                    <table >
+                        <tr>
+                            <td>分配角色</td>
+                            <td>
+                                <select name="role_id" id="r_id" onchange="selectRole()">
+                                    <option value="请选择">请选择</option>
+                                    {section name=sn loop=$arr}
+                                        <option value="{$arr[sn].role_id}">{$arr[sn].role_name}</option>
+                                   {/section}
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    {section name=sns loop=$data}
+                        {if $data[sns].parent_id eq 0}<hr>
+                    {"&nbsp;&nbsp;&nbsp;"|str_repeat:{$data[sns].flage*4}}<input type="checkbox" name="p_id[]" id="{$data[sns].power_id}" onclick="checkedPower(this)" value="{$data[sns].power_id}"/>
+                            <b style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;{$data[sns].power_name}</h7>
+                                {else}
+                                {"&nbsp;&nbsp;&nbsp;"|str_repeat:{$data[sns].flage*4}}
+                                {"&nbsp;&nbsp;&nbsp;"|str_repeat:{$data[sns].flage*4}}  <input type="checkbox" name="p_id[]" id="{$data[sns].power_id}"  value="{$data[sns].power_id}"/>
+                                <b style="color: black">&nbsp;&nbsp;{$data[sns].power_name}</b>
+                        {/if}
+                    {/section}
+
+                    <div class="preview">
+                        <input type="submit" class="preview-btn btn01" value="保存"/>
+                        <input type="reset" class="preview-btn btn01" value="取消"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    function checkedPower(obj){
+        var id=obj.id;
+        var p_id=$('#'+id).val();
+        $.ajax({
+            type: "POST",
+            url: "power.php?c=power&&a=checkedPower",
+            data: "p_id="+p_id,
+            dataType:"json",
+            success: function(msg){
+                var p_id=msg;
+                if(obj.checked){
+                    for(var i=0;i<p_id.length;i++){
+                        // alert(p_id.length);
+                        $("#"+p_id[i]).prop("checked",true);
+                    }
+                }else{
+                    for(var i=0;i<p_id.length;i++){
+                        // alert(p_id.length);
+                        $("#"+p_id[i]).prop("checked",false);
+                    }
+                }
+            }
+        });
+    }
+    //默认选中
+    function selectRole(){
+        $(":checkbox").prop("checked",false);
+        var r_id=document.getElementById('r_id').value;
+        $.ajax({
+            type: "POST",
+            url: "power.php?c=power&&a=selectPowers",
+            data: "role_id="+r_id,
+            dataType:"json",
+            success: function(msg){
+                var p_id=msg;
+                for(var i=0;i<p_id.length;i++){
+                    //alert(p_id.length);
+                    $("#"+p_id[i]).prop("checked",true);
+                }
+            }
+        });
+    }
+</script>

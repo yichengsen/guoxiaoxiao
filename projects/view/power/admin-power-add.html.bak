@@ -1,0 +1,75 @@
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/erweima-style.css" />
+<body>
+<div class="chuda_co" id="container">
+    <div class="co-box">
+        <div class="fill-info">
+            <div class="right">
+                <div class="info-box">
+                    <ul>
+                        <li>
+                            <label>权限类型：</label>
+                            <input type="radio" name="name"  value="0" checked onclick="dis_child()">&nbsp;&nbsp;二级权限&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="name"  value="1" onclick="dis_parent()">&nbsp;&nbsp;顶级权限
+                        </li>
+                        <!--  父类的权限填写表单 -->
+                        <form action="power.php?c=power&&a=fatherPower" method="post" onsubmit="return check_all()">
+                            <div id="parent" style="display: none">
+                                <li>
+                                    <label>权限名称：</label>
+                                    <input type="text" name="power_name" id="power_name" class="w200 name" onblur="check_powername()" >
+									<span id="s_powername"></span>
+                                </li>
+                                <li>
+                                    <label>控制器名称：</label>
+                                    <input type="text" name="controller_name" onblur="check_controllername()" id="controller_name" class="w200 name">
+									<span id="s_controllername"></span>
+                                </li>
+                                <div class="preview"><input type="submit" value="保存" class="preview-btn btn01"/>
+                                    <input type="reset" value="取消" class="cancel-btn btn01"/> </div>
+                            </div>
+                        </form>
+                        <!--  子类的权限填写表单 -->
+                        <form action="power.php?c=power&&a=sunPower" method="post" onsubmit="return check_alls()">
+                            <div id="child">
+                                <li>
+                                    <label>子类名称：</label>
+                                    <input type="text" name="power_name" id="power_names" class="w200 name" onblur="check_sunname()">
+									<span id="s_powernames"></span>
+                                </li>
+                                <li>
+                                    <label>英文名称：</label>
+                                    <input type="text" name="controller_way" id="controller_way" class="w200 name" onblur="check_way()">
+									<span id="s_controllerway"></span>
+                                </li>
+                                <li>
+                                    <label>父级权限：</label>
+                                    <select class="w200" name="parent_id">
+									{section name=sn loop=$data}
+									{if $data[sn].parent_id eq 0}
+										<option value="{$data[sn].power_id}">{$data[sn].power_name}</option>
+									{else}
+										<option value="{$data[sn].power_id}">
+										{"&nbsp;&nbsp;"|str_repeat:{$data[sn].flage*3}}
+										{$data[sn].power_name}
+										
+										</option>
+									{/if}
+									{/section}
+                                    </select>
+									{section name=sn loop=$data}
+									<input type="hidden" name="controller_name" value="{$data[sn].controller_name}"/>
+									{/section}
+                                </li>
+                                <div class="preview"><input type="submit" value="保存" class="preview-btn btn01"/>
+                                    <input type="reset" value="取消" class="cancel-btn btn01"/> </div>
+                            </div>
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="static/h-ui/js/power/admin-power-add.js"></script>

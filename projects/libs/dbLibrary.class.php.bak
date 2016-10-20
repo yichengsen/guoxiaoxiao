@@ -1,0 +1,170 @@
+<?php
+class dbLibrary {
+	//connect db
+	public $con = false;
+	function __construct($host,$username,$password,$dbname){
+		//$con = @mysql_connect($host,$username,$password);
+		//mysql_select_db($dbname,$con) or die("con error");
+		//$this->query("set names utf8");
+		$this->con = mysqli_connect("localhost","root","root","test"); 
+		if (mysqli_connect_errno($this->con)) 
+		{ 
+			echo "连接 MySQL 失败: " . mysqli_connect_error(); 
+		} 
+			$this->con->query("set names utf8");
+		}
+
+	 /**
+     * 插入方法
+     * @param string $table 操作的数据表名
+     * @param $data 字段-值的一维数组
+     * @return int 受影响的行数
+     */
+    public function insert($table, $data = array())
+    {
+        //sql语句
+        $sql = "insert into " . $table . " (" . implode(',', array_keys($data)) . ") value('" . implode("','", array_values($data)) . "')";
+        //$query = $this->query($sql);
+		$query = $this->query($sql);
+        return $sql;
+    }
+
+	 /**
+     * 删除方法
+     * @param string $tbName 操作的数据表名
+     * @return int 受影响的行数
+     */
+    public function deletes($table, $condition)
+    {
+        $where = '';
+        if (!empty($condition)) {
+            foreach ($condition as $k => $v) {
+                $where .= $k . "='" . $v . "' and ";
+            }
+            $where = 'where ' . $where . '1=1';
+        }
+        $sql = "delete from {$table} {$where}";
+        //$query = $this->query($sql);
+		$query = $this->query($sql);
+        return $query;
+    }
+
+	//删除操作
+          public function delete($table,$where){
+            $sql="delete from $table where $where";
+            //$this->query($sql);
+			$this->query($sql);
+            //返回受影响的行数
+             return mysqli_affected_rows();
+         }
+
+	/**
+     * 修改函数
+     * @param string $tbName 操作的数据表名
+     * @param array $data 参数数组
+     * @return int 受影响的行数
+     */
+    // public function update($table,$data,$where=array()){
+
+    // }
+    public function update($table, $data, $condition = array())
+    {
+        $where = '';
+        if (!empty($condition)) {
+            foreach ($condition as $k => $v) {
+                $where .= $k . "='" . $v . "' and ";
+            }
+            $where = 'where ' . $where . '1=1';
+        }
+        $updatastr = '';
+        if (!empty($data)) {
+            foreach ($data as $k => $v) {
+                $updatastr .= $k . "='" . $v . "',";
+            }
+            $updatastr = 'set ' . rtrim($updatastr, ',');
+        }
+        $sql = "update {$table} {$updatastr} {$where}";
+        //$query = $this->query($sql);
+		$query = $this->query($sql);
+        return $query;
+    }
+
+	 /**
+     * 查询
+     * $fieldstr 查询的字段
+     * $where   查询的条件
+     */
+    public function select($table, $condition = array(), $field = array())
+    {
+        $where = '';
+        if (!empty($condition)) {
+            foreach ($condition as $k => $v) {
+                $where .= $k . "='" . $v . "' and ";
+            }
+            $where = 'where ' . $where . '1=1';
+        }
+        $fieldstr = '';
+        if (!empty($field)) {
+
+            foreach ($field as $k => $v) {
+                $fieldstr .= $v . ',';
+            }
+            $fieldstr = rtrim($fieldstr, ',');
+        } else {
+            $fieldstr = '*';
+        }
+        $sql = "select {$fieldstr} from {$table} {$where}";
+        $result = $this->query($sql);
+        $resuleRow = array();
+        $i = 0;
+        while ($row = mysqli_fetch_assoc($result)) {
+            foreach ($row as $k => $v) {
+                $resuleRow[$i][$k] = $v;
+            }
+            $i++;
+        }
+        return $resuleRow;
+    }
+
+	//exec sql
+	public function query($sql){
+		//$query = mysql_query($sql);
+		$query = mysqli_query($this->con,$sql);
+		return $query;
+	}
+
+	//get one
+	public function getOne($sql){
+		$query = $this->query($sql);
+		$row = mysqli_fetch_array($query);
+		return $row[0];
+	}
+
+	//get row
+	public function getRow($sql){
+		$query = $this->query($sql);
+		//return mysql_fetch_array($query);
+		return mysqli_fetch_array($query);
+	}
+
+	//get List 
+	public function getAll($sql){
+		//$query = mysql_query($sql);
+		$query = mysqli_query($this->con,$sql);
+		$list = array();
+		if($query){
+			while($r = mysqli_fetch_array($query)){
+				$list[] = $r;
+			}
+			return $list;
+		}else{
+			die("data is empty");
+		}
+	}
+
+	//getLastInsertId
+	public function getLastInsertId(){
+
+		return mysqli_insert_id();
+	}
+}

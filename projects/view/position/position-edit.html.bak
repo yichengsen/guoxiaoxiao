@@ -1,0 +1,87 @@
+{include file="view/index/_meta.html"}
+</head>
+<body>
+<article class="page-container">
+	<form class="form form-horizontal" action="position.php?c=position&&a=positionEdits" method="post">
+	{section name=sn loop=$data}
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职位名称：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" value="{$data[sn].position_name}" id="adminName" name="position_name">
+		</div>
+	</div>
+	<input type="hidden" name="p_id" value="{$data[sn].p_id}"/>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职位性别：</label>
+		<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+			<div class="radio-box">
+				<input name="position_sex" type="radio" value="男" id="sex-1" >
+				<label for="sex-1">男</label>
+			</div>
+			<div class="radio-box">
+				<input type="radio" id="sex-2" value="女" name="position_sex">
+				<label for="sex-2">女</label>
+			</div>
+			<div class="radio-box">
+				<input type="radio" id="sex-2" value="不限" name="position_sex" checked>
+				<label for="sex-2">不限</label>
+			</div>
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>工作年限：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" value="{$data[sn].position_work_age}" placeholder="" name="position__work_age">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职位薪资：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" value="{$data[sn].position_salary}" id="phone" name="position_salary">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职位学历：</label>
+		<div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
+			<select class="select" name="position_degree" size="1">
+				<option value="专科">专科</option>
+				<option value="本科">本科</option>
+				<option value="不限">不限</option>
+				<option value="硕士">硕士</option>
+				<option value="博士">博士</option>
+			</select>
+			</span> </div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职位福利：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" value="{$data[sn].position_welfare}" class="input-text" id="phone" name="position_welfare">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>职位描述：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<input type="text" class="input-text" id="phone" value="{$data[sn].position_describe}" name="position_describe">
+		</div>
+	</div>
+	<div class="row cl">
+		<label class="form-label col-xs-4 col-sm-3">任职条件：</label>
+		<div class="formControls col-xs-8 col-sm-9">
+			<textarea name="position_condition" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" value="" onKeyUp="textarealength(this,100)">{$data[sn].position_condition}</textarea>
+			<p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+		</div>
+	</div>
+	<div class="row cl">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+		</div>
+	</div>
+	{/section}
+	</form>
+</article>
+
+<!--_footer 作为公共模版分离出去--> 
+{include file="view/index/_footer.html"}
+<!--/_footer /作为公共模版分离出去--> 
+</body>
+</html>

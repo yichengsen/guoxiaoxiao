@@ -1,0 +1,3 @@
+{section name=sn loop=$data}
+					<li><a _href="{$data[sn].controller_name}.php?c={$data[sn].controller_name}&&a={$data[sn].controller_way}" data-title="{$data[sn].power_name}" href="javascript:void(0)">{$data[sn].power_name}</a></li>
+				{/section}

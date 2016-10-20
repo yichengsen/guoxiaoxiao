@@ -1,0 +1,68 @@
+<?php
+class positionModel extends baseModel {
+	public $pagesize = 5; 
+	
+	//职位添加
+	public function positionAdds($data){
+		$arr = $this->db->insert("position", $data);
+        return $arr;
+	}
+
+	//查询职位列表
+	public function positionList(){
+		$arr = $this->db->select("position");
+        return $arr;
+	}
+
+	//职位列表分页
+	function getList($page){
+		$start = ($page-1)*$this->pagesize;
+		$sql = "select * from position where 1=1 limit ".$start.",".$this->pagesize;
+		$list = $this->db->getAll($sql);
+		return $list;
+	}
+	
+	//职位列表获得总条数
+	function getTotal(){
+		$sql = "select count(*) from position where 1=1 ";
+		return $this->db->getOne($sql);
+	}
+
+	//搜索职位分页
+	function getLists($position_name,$page){
+		$start = ($page-1)*$this->pagesize;
+		$sql = "select * from position where position_name like '%$position_name%'  limit ".$start.",".$this->pagesize;
+		$list = $this->db->getAll($sql);
+		return $list;
+	}
+	
+	//搜索职位获得总条数
+	function getTotals($position_name){
+		$sql = "select count(*) from position where position_name like '%$position_name%' ";
+		return $this->db->getOne($sql);
+	}
+
+	//职位列表删除
+	public function positionDelete($id){
+		$arr = $this->db->deletes("position", array('p_id' => $id));
+        return $arr;
+	}
+
+	//职位列表编辑
+	public function selectPosition($p_id){
+		$arr = $this->db->select("position", array('p_id' => $p_id));
+        return $arr;
+	}
+
+	//职位列表编辑修改
+	public function positionEdits($p_id,$position_name,$position_work_age,$position_salary,$position_degree,$position_welfare,$position_describe,$position_condition,$position_sex){
+		$arr = $this->db->update("position", array('position_name' => $position_name, 'position_work_age' => $position_work_age, 'position_salary' => $position_salary, 'position_degree' => $position_degree, 'position_welfare' => $position_welfare, 'position_describe' => $position_describe, 'position_condition' => $position_condition, 'position_sex' => $position_sex), $condition =array('p_id'=>$p_id));
+        return $arr;
+	}
+
+	//职位批量删除
+	public function positionDelall($id){
+		$where="p_id in ($id)";
+		$arr=$this->db->delete('position',$where);
+	}
+}

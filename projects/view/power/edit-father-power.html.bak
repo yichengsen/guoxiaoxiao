@@ -1,0 +1,78 @@
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/erweima-style.css" />
+<body>
+<div class="chuda_co" id="container">
+    <div class="co-box">
+        <div class="fill-info">
+            <div class="right">
+                <div class="info-box">
+                    <ul>
+                        <li>
+                            <label>权限类型：</label>
+                            <input type="radio" name="name" checked  value="1" onclick="dis_parent()">&nbsp;&nbsp;顶级权限
+                        </li>
+                        <!--  父类的权限填写表单 -->
+                        <form action="power.php?c=power&&a=editFatherPower" method="post" onsubmit="return check_all()">
+                            <div id="parent">
+                                <li>
+                                    <label>权限名称：</label>
+									{section name=sn loop=$arr}
+                                    <input type="text" name="power_name" id="power_name" class="w200 name" value="{$arr[sn].power_name}" onblur="check_powername()" >
+									<span id="s_powername"></span>
+									<input type="hidden" name="power_id" value="{$arr[sn].power_id}"/>
+									{/section}
+                                </li>
+                               <!-- <li>
+                                    <label>控制器名称：</label>
+                                    <input type="text" name="controller_name" onblur="check_controllername()" id="controller_name" class="w200 name">
+									<span id="s_controllername"></span>
+                                </li>-->
+                                <div class="preview"><input type="submit" value="保存" class="preview-btn btn01"/>
+                                    <input type="reset" value="取消" class="cancel-btn btn01"/> </div>
+                            </div>
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+	/*验证父级权限*/
+	//验证权限名称
+	function check_powername(){
+		var power_name = document.getElementById('power_name').value;
+		if(power_name!=''){	
+			document.getElementById('s_powername').innerHTML="*正确";
+			return true;
+		}else{
+			document.getElementById('s_powername').innerHTML="*权限名称不能为空";
+			return false;
+		}
+	}
+	//验证控制器名称
+	function check_controllername(){
+		var name=/^[A-Za-z]+$/
+		var controller_name = document.getElementById('controller_name').value;
+		if(controller_name!=''){
+			if(name.test(controller_name)){
+				document.getElementById('s_controllername').innerHTML="*正确";
+				return true;
+			}else{
+				document.getElementById('s_controllername').innerHTML="*必须是全英文";
+				return false;
+			}
+		}else{
+			document.getElementById('s_controllername').innerHTML="*控制器名称不能为空";
+			return false;
+		}
+	}
+
+	//验证所有
+	function check_all(){
+		if(check_powername() & check_controllername()){
+			return true;
+		}return false;
+	}
+</script>

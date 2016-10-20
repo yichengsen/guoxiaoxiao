@@ -1,0 +1,8 @@
+<?php
+class picController extends baseController {
+		
+		//ÂÖ²¥Í¼Ìí¼Ó
+		public function picAdd(){
+			$this->display('pic_add.html');
+		}
+}

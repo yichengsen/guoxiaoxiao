@@ -1,0 +1,108 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>新增班级</title>
+    <link rel="stylesheet" type="text/css" href="static/h-ui/css/erweima-style.css" />
+</head>
+<body>
+<div class="chuda_co" id="container">
+    <div class="co-box">
+        <div class="title"><h4>角色管理>>分配权限>><a href="power.php?c=power&&a=rolenameAdd"><h4>+添加角色</a>
+	</div>
+        <div class="fill-info">
+            <form action="power.php?c=power&&a=allotPower" method="post">
+                <div class="info-box">
+                    <table >
+                        <tr>
+                            <td><b>&nbsp;&nbsp;分配角色 :  &nbsp;&nbsp;</b></td>
+                            <td>
+                                <select name="role_id" id="r_id" onchange="selectRole()">
+                                    <option value="请选择">请选择</option>
+                                    {section name=sn loop=$role}
+                                    <option value="{$role[sn].role_id}">{$role[sn].role_name}</option>
+                                    {/section}
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    {section name=sns loop=$arr}
+                    <hr>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <!--一级权限-->
+                    <input type="checkbox" name="p_id[]" id="{$arr[sns].power_id}" onclick="checkedPower(this)" value="{$arr[sns].power_id}"/><b style="color: black">&nbsp;&nbsp;&nbsp;&nbsp;{$arr[sns].power_name}</h7>
+                        {section name=sno loop=$arr1}
+                    <!--二级权限-->
+                    {if {$arr[sns].power_id} eq {$arr1[sno].parent_id}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="checkbox" name="p_id[]" onclick="checkedPower(this)" id="{$arr1[sno].power_id}"  value="{$arr1[sno].power_id}"/>
+                    <b style="color: black">&nbsp;&nbsp;{$arr1[sno].power_name}</b>
+                    <!--三级权限-->
+                        {section name=snq loop=$arr2}
+                            {if {$arr1[sno].power_id} eq {$arr2[snq].parent_id}}
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                          <input type="checkbox" name="p_id[]" id="{$arr2[snq].power_id}"  value="{$arr2[snq].power_id}"/>
+                        <b style="color: black">&nbsp;&nbsp;{$arr2[snq].power_name}</b>
+                            {/if}
+                        {/section}
+                    {/if}
+                        {/section}
+                    {/section}
+                        <div class="preview">
+                            <input type="submit" class="preview-btn btn01" value="保存"/>
+                            <input type="reset" class="preview-btn btn01" value="取消"/>
+                        </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    function checkedPower(obj){
+        var id=obj.id;
+        //alert(id);
+        var p_id=$('#'+id).val();
+        //alert(p_id);
+        $.ajax({
+            type: "POST",
+            url: "power.php?c=power&&a=checkedPower",
+            data: "p_id="+p_id,
+            dataType:"json",
+            success: function(msg){
+                var p_id=msg;
+                //alert(p_id);
+                if(obj.checked){
+                   for(var i=0;i<p_id.length;i++){
+                        // alert(p_id.length);
+                       $("#"+p_id[i]).prop("checked",true);
+                    }
+                }else{
+                   for(var i=0;i<p_id.length;i++){
+                        // alert(p_id.length);
+                        $("#"+p_id[i]).prop("checked",false);
+                    }
+                }
+            }
+        });
+    }
+    //默认选中
+    function selectRole(){
+        $(":checkbox").prop("checked",false);
+        var r_id=document.getElementById('r_id').value;
+        $.ajax({
+            type: "POST",
+            url: "power.php?c=power&&a=selectPowers",
+            data: "role_id="+r_id,
+            dataType:"json",
+            success: function(msg){
+                var p_id=msg;
+                for(var i=0;i<p_id.length;i++){
+                    //alert(p_id.length);
+                    $("#"+p_id[i]).prop("checked",true);
+                }
+            }
+        });
+    }
+</script>

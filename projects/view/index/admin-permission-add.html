@@ -1,0 +1,76 @@
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/erweima-style.css" />
+<body>
+<div class="chuda_co" id="container">
+    <div class="co-box">
+        <div class="fill-info">
+
+            <div class="right">
+                <a class="btn02" id="xg_btn" href="javascript:;">分类权限</a>
+                <div class="info-box">
+                    <ul>
+                        <li>
+                            <label>权限类型：</label>
+                            <input type="radio" name="name"  value="0" checked onclick="dis_child()">&nbsp;&nbsp;二级权限&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="name"  value="1" onclick="dis_parent()">&nbsp;&nbsp;顶级权限
+                        </li>
+                        <!--  父类的权限填写表单 -->
+                        <form action="index.php?c=index" method="post">
+                            <div id="parent" style="display: none">
+                                <li>
+                                    <label>权限名称：</label>
+                                    <input type="text" name="power_name" class="w200 name" >
+                                </li>
+                                <li>
+                                    <label>控制器名称：</label>
+                                    <input type="text" name="power_path" class="w200 name">
+                                </li>
+                                <li>
+                                    <label>方法名称：</label>
+                                    <input type="text" name="power_way" class="w200 name">
+                                </li>
+                                <div class="preview"><input type="submit" value="保存" class="preview-btn btn01"/>
+                                    <input type="reset" value="取消" class="cancel-btn btn01"/> </div>
+                            </div>
+                        </form>
+                        <!--  子类的权限填写表单 -->
+                        <form action="" method="post">
+                            <div id="child">
+                                <li>
+                                    <label>中文名称：</label>
+                                    <input type="text" name="chinaname" class="w200 name" >
+                                </li>
+                                <li>
+                                    <label>英文名称：</label>
+                                    <input type="text" name="englishname" class="w200 name" >
+                                </li>
+                                <li>
+                                    <label>父级权限：</label>
+                                    <select class="w200" name="aid">
+                                        <option>管理员管理</option>
+                                    </select>
+                                </li>
+                                <div class="preview"><input type="submit" value="保存" class="preview-btn btn01"/>
+                                    <input type="reset" value="取消" class="cancel-btn btn01"/> </div>
+                            </div>
+                        </form>
+                    </ul>
+                </div>
+                <!--<div class="preview"><input type="submit" value="保存" class="preview-btn btn01"/>-->
+                <!--<input type="reset" value="取消" class="cancel-btn btn01"/> </div>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    function dis_child(){
+        document.getElementById('child').style.display='block';
+        document.getElementById('parent').style.display='none';
+    }
+    function dis_parent(){
+        document.getElementById('child').style.display='none';
+        document.getElementById('parent').style.display='block';
+    }
+</script>

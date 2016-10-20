@@ -1,0 +1,16 @@
+<?php
+class newsModel extends baseModel {
+	public $pagesize = 5; 
+	
+	//新闻添加
+	public function newsAdd($data){
+		$arr = $this->db->insert("news", $data);
+        return $arr;
+	}
+
+	//新闻列表
+	public function selectNews(){
+		$arr = $this->db->select("news");
+        return $arr;
+	}
+}

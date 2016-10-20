@@ -1,0 +1,56 @@
+<link rel="stylesheet" type="text/css" href="static/h-ui/css/erweima-style.css" />
+<body>
+<div class="chuda_co" id="container">
+    <div class="co-box">
+        <div class="fill-info">
+
+            <div class="right">
+               
+                <div class="info-box">
+                    <ul>
+                        <li>
+                            <label>权限类型：</label>
+                            <input type="radio" name="name"  value="0" checked onclick="dis_child()">&nbsp;&nbsp;子级权限&nbsp;&nbsp;&nbsp;&nbsp;          
+                        </li>
+                        <!--  子类的权限填写表单 -->
+                        <form action="power.php?c=power&&a=editSunPower" method="post" onsubmit="return check_alls()">
+                            <div id="child">
+							{section name=sn loop=$arr}
+                                <li>
+                                    <label>子类名称：</label>
+                                    <input type="text" name="power_name" id="power_names" class="w200 name" onblur="check_sunname()" value="{$arr[sn].power_name}">
+									<span id="s_powernames"></span>
+                                </li>
+                                <li>
+                                    <label>英文名称：</label>
+                                    <input type="text" name="controller_way" id="controller_way" class="w200 name" onblur="check_way()" value="{$arr[sn].controller_way}">
+									<span id="s_controllerway"></span>
+                                </li>
+								
+									<input type="hidden" name="power_id" value="{$arr[sn].power_id}"/>
+								{/section}
+                                <li>
+                                    <label>父级权限：</label>
+                                    <select class="w200" name="parent_id">
+									{section name=sn loop=$data}
+                                        <option value="{$data[sn].power_id}">{$data[sn].power_name}</option>
+										
+									{/section}
+                                    </select>
+									{section name=sn loop=$data}
+									<input type="hidden" name="controller_name" value="{$data[sn].controller_name}"/>
+									{/section}
+                                </li>
+                                <div class="preview"><input type="submit" value="保存" class="preview-btn btn01"/>
+                                    <input type="reset" value="取消" class="cancel-btn btn01"/> </div>
+                            </div>
+                        </form>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="static/h-ui/js/power/edit-sun-power.js"></script>

@@ -1,0 +1,141 @@
+/*以下是公用样式，也就是每个页面都有的部分*/
+* {
+  padding: 0;
+  margin: 0;
+}
+/*去掉标签自带的间隙*/
+ul,
+li,
+ol {
+  list-style: none;
+}
+/*去掉列表的项目符号或者编号*/
+body {
+  margin: 0 auto;
+  font-size: 12px;
+}
+/*设置body中所有大div宽度为868px,并且自动居中*/
+a {
+  text-decoration: none;
+}
+/*去掉超链接的下划线*/
+img {
+  border: none;
+}
+/*去掉图片加完链接之后自带的边框*/
+img,
+input,
+textarea,
+select {
+  vertical-align: middle;
+}
+/*设置图片以及表单相关元素垂直居中对齐*/
+html,
+body,
+.containter {
+  width: 100%;
+  height: 100%;
+}
+.header {
+  width: 100%;
+  height: 60px;
+  background: #3ec58d;
+}
+.header span {
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 60px;
+  padding-left: 50px;
+  color: #f2f2f2;
+}
+.section {
+  width: 100%;
+  height: 100%;
+  background: url(../img/bg.jpg) no-repeat;
+  background-size: 100% auto;
+  position: relative;
+}
+.section .span1 {
+  font-size: 56px;
+  color: #3ec58d;
+  margin-left: -300px;
+  position: absolute;
+  bottom: 70%;
+  left: 50%;
+}
+.section .sec {
+  opacity: 0.6;
+  width: 350px;
+  height: 380px;
+  background: white;
+  margin-left: -206px;
+  margin-bottom: -239px;
+  position: absolute;
+  bottom: 40%;
+  left: 50%;
+}
+.section .sec #span1 {
+  display: block;
+  opacity: 1;
+  font-size: 16px;
+  padding-left: 30px;
+  padding-top: 30px;
+}
+.section .sec #user {
+  width: 75%;
+  height: 25px;
+  margin-left: 30px;
+  opacity: 0.9;
+}
+.section .sec #span2 {
+  display: block;
+  font-size: 16px;
+  padding-left: 30px;
+  padding-top: 13px;
+}
+.section .sec #pd {
+  width: 75%;
+  height: 25px;
+  margin-left: 30px;
+}
+.section .sec #span3 {
+  display: block;
+  font-size: 16px;
+  padding-left: 30px;
+  padding-top: 13px;
+}
+.section .sec #input1 {
+  width: 35%;
+  height: 25px;
+  margin-left: 30px;
+}
+.section .sec #checkCode {
+  height: 25px;
+  margin-left: 30px;
+}
+.section .sec #input2 {
+  margin-left: 30px;
+}
+.section .sec #Button1 {
+  width: 80%;
+  height: 36px;
+  margin-top: 5px;
+  margin-left: 30px;
+  background: #3ec58d;
+  border: none;
+  color: white;
+  font-size: 20px;
+}
+.section .sec .Code {
+  background-image: url(../img/code.jpg);
+  font-family: Arial;
+  font-style: italic;
+  color: black;
+  border: 0;
+  padding: 2px 3px;
+  letter-spacing: 3px;
+  font-weight: bolder;
+}
+.section .sec .unchanged {
+  border: 0;
+}
